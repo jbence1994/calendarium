@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: calendarium
+  profiles:
+    active: default
