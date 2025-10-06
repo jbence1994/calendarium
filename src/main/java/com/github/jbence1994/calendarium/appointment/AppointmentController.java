@@ -13,17 +13,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/appointments")
 @RequiredArgsConstructor
 public class AppointmentController {
+    private final AppointmentDtoSanitizer appointmentDtoSanitizer;
     private final AppointmentService appointmentService;
     private final AppointmentMapper appointmentMapper;
 
     @PostMapping
     public ResponseEntity<?> createAppointment(@Valid @RequestBody AppointmentDto appointmentDto) {
-        var appointment = appointmentMapper.toEntity(appointmentDto);
+        var sanitizedAppointmentDto = appointmentDtoSanitizer.sanitize(appointmentDto);
+
+        var appointment = appointmentMapper.toEntity(sanitizedAppointmentDto);
 
         appointmentService.createAppointment(appointment);
 
-        appointmentDto.setId(appointment.getId());
+        sanitizedAppointmentDto.setId(appointment.getId());
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(appointmentDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(sanitizedAppointmentDto);
     }
 }

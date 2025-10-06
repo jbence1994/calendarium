@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 
 import static com.github.jbence1994.calendarium.appointment.AppointmentDtoTestObject.appointmentDtoWithId;
 import static com.github.jbence1994.calendarium.appointment.AppointmentDtoTestObject.appointmentDtoWithoutId;
+import static com.github.jbence1994.calendarium.appointment.AppointmentDtoTestObject.notSanitizedAppointmentDtoWithoutId;
 import static com.github.jbence1994.calendarium.appointment.AppointmentTestObject.appointmentWithoutId;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.allOf;
@@ -26,6 +27,9 @@ import static org.mockito.Mockito.when;
 public class AppointmentControllerTests {
 
     @Mock
+    private AppointmentDtoSanitizer appointmentDtoSanitizer;
+
+    @Mock
     private AppointmentService appointmentService;
 
     @Mock
@@ -36,10 +40,11 @@ public class AppointmentControllerTests {
 
     @Test
     public void createProductTest() {
+        when(appointmentDtoSanitizer.sanitize(any())).thenReturn(appointmentDtoWithoutId());
         when(appointmentMapper.toEntity(any())).thenReturn(appointmentWithoutId());
         doNothing().when(appointmentService).createAppointment(any());
 
-        var result = appointmentController.createAppointment(appointmentDtoWithoutId());
+        var result = appointmentController.createAppointment(notSanitizedAppointmentDtoWithoutId());
 
         assertThat(result.getStatusCode(), equalTo(HttpStatus.CREATED));
         assertThat(result.getBody(), not(nullValue()));
