@@ -29,6 +29,8 @@ public class Appointment {
 
     private String name;
 
+    private String description;
+
     private LocalDateTime startDate;
 
     private LocalDateTime endDate;

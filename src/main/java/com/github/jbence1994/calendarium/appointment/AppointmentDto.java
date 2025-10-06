@@ -20,6 +20,8 @@ public class AppointmentDto {
     @NotEmpty(message = "Appointment's name must be not empty.")
     private String name;
 
+    private String description;
+
     @NotNull(message = "Appointment's start date must be provided.")
     private LocalDateTime startDate;
 

@@ -3,6 +3,7 @@ package com.github.jbence1994.calendarium.appointment;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import static com.github.jbence1994.calendarium.appointment.AppointmentTestConstants.APPOINTMENT_DESCRIPTION;
 import static com.github.jbence1994.calendarium.appointment.AppointmentTestConstants.APPOINTMENT_END_DATE;
 import static com.github.jbence1994.calendarium.appointment.AppointmentTestConstants.APPOINTMENT_ID;
 import static com.github.jbence1994.calendarium.appointment.AppointmentTestConstants.APPOINTMENT_NAME;
@@ -26,6 +27,6 @@ public final class AppointmentDtoTestObject {
     }
 
     private static AppointmentDto buildAppointmentDto(UUID id, LocalDateTime startDate, LocalDateTime endDate) {
-        return new AppointmentDto(id, APPOINTMENT_NAME, startDate, endDate);
+        return new AppointmentDto(id, APPOINTMENT_NAME, APPOINTMENT_DESCRIPTION, startDate, endDate);
     }
 }

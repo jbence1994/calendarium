@@ -2,6 +2,7 @@ package com.github.jbence1994.calendarium.appointment;
 
 import java.util.UUID;
 
+import static com.github.jbence1994.calendarium.appointment.AppointmentTestConstants.APPOINTMENT_DESCRIPTION;
 import static com.github.jbence1994.calendarium.appointment.AppointmentTestConstants.APPOINTMENT_END_DATE;
 import static com.github.jbence1994.calendarium.appointment.AppointmentTestConstants.APPOINTMENT_ID;
 import static com.github.jbence1994.calendarium.appointment.AppointmentTestConstants.APPOINTMENT_NAME;
@@ -17,6 +18,6 @@ public final class AppointmentTestObject {
     }
 
     private static Appointment buildAppointment(UUID id) {
-        return new Appointment(id, APPOINTMENT_NAME, APPOINTMENT_START_DATE, APPOINTMENT_END_DATE, null, null);
+        return new Appointment(id, APPOINTMENT_NAME, APPOINTMENT_DESCRIPTION, APPOINTMENT_START_DATE, APPOINTMENT_END_DATE, null, null);
     }
 }
