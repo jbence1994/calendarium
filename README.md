@@ -17,7 +17,10 @@ numbers:
 Run project locally
 -------------------
 
-### Build application
+Be sure to copy `.env.example` to `.env` and update it with your local database connection parameters before running the
+application.
+
+### Build application and database schema with Flyway Maven plugin
 
 ```bash
 mvn clean install

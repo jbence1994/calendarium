@@ -24,11 +24,14 @@
 
         <!-- Project dependency versions -->
         <springdoc-openapi-starter-webmvc-ui.version>2.8.13</springdoc-openapi-starter-webmvc-ui.version>
+        <spring-dotenv.version>4.0.0</spring-dotenv.version>
         <mapstruct-processor.version>1.6.3</mapstruct-processor.version>
         <mapstruct.version>1.6.3</mapstruct.version>
 
         <!-- Maven plugin versions -->
+        <properties-maven-plugin.version>1.2.1</properties-maven-plugin.version>
         <jacoco-maven-plugin.version>0.8.13</jacoco-maven-plugin.version>
+        <flyway-maven-plugin.version>11.13.2</flyway-maven-plugin.version>
         <maven-checkstyle-plugin.version>3.6.0</maven-checkstyle-plugin.version>
         <checkstyle.version>11.1.0</checkstyle.version>
         <maven-site-plugin.version>3.21.0</maven-site-plugin.version>
@@ -39,6 +42,9 @@
         <jacoco.complexity-coverage>1.00</jacoco.complexity-coverage>
         <jacoco.method-coverage>1.00</jacoco.method-coverage>
         <jacoco.class-coverage>1.00</jacoco.class-coverage>
+
+        <!-- Flags -->
+        <flyway.skip>false</flyway.skip>
     </properties>
 
     <dependencies>
@@ -56,6 +62,15 @@
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>me.paulschwarz</groupId>
+            <artifactId>spring-dotenv</artifactId>
+            <version>${spring-dotenv.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
@@ -71,6 +86,19 @@
             <version>${mapstruct.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-mysql</artifactId>
+        </dependency>
+        <dependency>
+            <artifactId>mysql-connector-j</artifactId>
+            <groupId>com.mysql</groupId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
@@ -81,6 +109,53 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <profiles>
+        <profile>
+            <id>load-env</id>
+            <activation>
+                <file>
+                    <exists>${project.basedir}/.env</exists>
+                </file>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>properties-maven-plugin</artifactId>
+                        <version>${properties-maven-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>read-env</id>
+                                <phase>initialize</phase>
+                                <goals>
+                                    <goal>read-project-properties</goal>
+                                </goals>
+                                <configuration>
+                                    <files>
+                                        <file>${project.basedir}/.env</file>
+                                    </files>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>skip-flyway</id>
+            <activation>
+                <property>
+                    <name>spring.profiles.active</name>
+                    <value>default</value>
+                </property>
+            </activation>
+            <properties>
+                <flyway.skip>true</flyway.skip>
+            </properties>
+        </profile>
+    </profiles>
 
     <build>
         <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
@@ -172,6 +247,27 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>${flyway-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>flyway-migrate</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>migrate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <skip>${flyway.skip}</skip>
+                    <url>${FLYWAY_DATASOURCE_URL}</url>
+                    <user>${FLYWAY_DATASOURCE_USER}</user>
+                    <password>${FLYWAY_DATASOURCE_PASSWORD}</password>
+                    <cleanDisabled>false</cleanDisabled>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
