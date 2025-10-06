@@ -15,9 +15,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Set<ValidationErrorDto>> handleValidationErrors(MethodArgumentNotValidException exception) {
         var validationErrors = new HashSet<ValidationErrorDto>();
 
-        exception.getBindingResult().getFieldErrors().forEach(error ->
-                validationErrors.add(new ValidationErrorDto(error.getField(), error.getDefaultMessage()))
+        exception.getBindingResult().getFieldErrors().forEach(fieldError ->
+                validationErrors.add(new ValidationErrorDto(fieldError.getField(), fieldError.getDefaultMessage()))
         );
+
+        exception.getAllErrors().forEach(objectError ->
+                validationErrors.add(new ValidationErrorDto("appointment.startDate", objectError.getDefaultMessage())));
 
         return ResponseEntity.badRequest().body(validationErrors);
     }

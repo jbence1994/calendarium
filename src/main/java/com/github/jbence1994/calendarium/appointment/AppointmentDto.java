@@ -12,6 +12,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Getter
 @Setter
+@StartDateBeforeEndDateValidation
 public class AppointmentDto {
     private UUID id;
 
