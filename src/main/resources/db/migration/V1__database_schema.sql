@@ -4,6 +4,19 @@ CREATE DATABASE IF NOT EXISTS calendarium
 
 USE calendarium;
 
+CREATE TABLE IF NOT EXISTS users
+(
+    id           BIGINT       NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    email        VARCHAR(255) NOT NULL UNIQUE,
+    password     VARCHAR(255) NOT NULL,
+    first_name   VARCHAR(255) NOT NULL,
+    middle_name  VARCHAR(255),
+    last_name    VARCHAR(255) NOT NULL,
+    phone_number VARCHAR(25) UNIQUE,
+    created_at   DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at   DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
 CREATE TABLE IF NOT EXISTS appointments
 (
     id          BINARY(16)   NOT NULL PRIMARY KEY DEFAULT (UUID_TO_BIN(UUID())),
