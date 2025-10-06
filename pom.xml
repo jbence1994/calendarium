@@ -190,6 +190,7 @@
                 <version>${jacoco-maven-plugin.version}</version>
                 <configuration>
                     <excludes>
+                        <exclude>com/github/jbence1994/calendarium/**/*MapperImpl*</exclude>
                         <exclude>com/github/jbence1994/calendarium/Application*</exclude>
                     </excludes>
                 </configuration>
