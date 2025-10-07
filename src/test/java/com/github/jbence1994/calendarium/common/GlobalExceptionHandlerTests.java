@@ -11,7 +11,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import java.util.List;
 
 import static com.github.jbence1994.calendarium.common.FieldErrorTestObject.fieldError;
-import static com.github.jbence1994.calendarium.common.ObjectErrorTestObject.objectError;
+import static com.github.jbence1994.calendarium.common.ObjectErrorTestObject.objectError1;
+import static com.github.jbence1994.calendarium.common.ObjectErrorTestObject.objectError2;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
@@ -43,12 +44,12 @@ public class GlobalExceptionHandlerTests {
     }
 
     @Test
-    public void handleValidationErrorsTest_WithObjectError() {
+    public void handleValidationErrorsTest_WithObjectError_1() {
         var bindingResult = mock(BindingResult.class);
         var exception = mock(MethodArgumentNotValidException.class);
 
         when(exception.getBindingResult()).thenReturn(bindingResult);
-        when(exception.getAllErrors()).thenReturn(List.of(objectError()));
+        when(exception.getAllErrors()).thenReturn(List.of(objectError1()));
 
         var result = globalExceptionHandler.handleValidationErrors(exception);
 
@@ -57,5 +58,22 @@ public class GlobalExceptionHandlerTests {
         assertThat(result.getBody().size(), equalTo(1));
         assertThat(result.getBody().stream().toList().getFirst().field(), equalTo("appointment.startDate"));
         assertThat(result.getBody().stream().toList().getFirst().message(), equalTo("Start date must before end date."));
+    }
+
+    @Test
+    public void handleValidationErrorsTest_WithObjectError_2() {
+        var bindingResult = mock(BindingResult.class);
+        var exception = mock(MethodArgumentNotValidException.class);
+
+        when(exception.getBindingResult()).thenReturn(bindingResult);
+        when(exception.getAllErrors()).thenReturn(List.of(objectError2()));
+
+        var result = globalExceptionHandler.handleValidationErrors(exception);
+
+        assertThat(result.getStatusCode(), equalTo(HttpStatus.BAD_REQUEST));
+        assertThat(result.getBody(), not(nullValue()));
+        assertThat(result.getBody().size(), equalTo(1));
+        assertThat(result.getBody().stream().toList().getFirst().field(), equalTo("objectError"));
+        assertThat(result.getBody().stream().toList().getFirst().message(), equalTo("ObjectError message."));
     }
 }
