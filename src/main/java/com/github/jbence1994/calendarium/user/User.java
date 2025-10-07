@@ -51,6 +51,6 @@ public class User {
     @GeneratedColumn("updated_at")
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "appointment", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "organizer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Appointment> appointments = new ArrayList<>();
 }
