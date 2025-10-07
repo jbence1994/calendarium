@@ -7,6 +7,7 @@ import org.mapstruct.Mapping;
 public interface AppointmentMapper {
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "organizer", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     Appointment toEntity(AppointmentDto appointmentDto);

@@ -9,9 +9,9 @@ public class AppointmentDtoSanitizer {
         return new AppointmentDto(
                 appointmentDto.getId(),
                 appointmentDto.getName().trim(),
-                appointmentDto.getDescription() != null ? appointmentDto.getDescription().trim() : null,
                 appointmentDto.getStartDate(),
-                appointmentDto.getEndDate()
+                appointmentDto.getEndDate(),
+                appointmentDto.getDescription() != null ? appointmentDto.getDescription().trim() : null
         );
     }
 }

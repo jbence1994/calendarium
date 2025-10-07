@@ -1,6 +1,7 @@
 package com.github.jbence1994.calendarium.user;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 import static com.github.jbence1994.calendarium.user.UserTestConstants.EMAIL;
 import static com.github.jbence1994.calendarium.user.UserTestConstants.FIRST_NAME;
@@ -28,7 +29,8 @@ public final class UserTestObject {
                 LAST_NAME,
                 PHONE_NUMBER,
                 LocalDateTime.now(),
-                LocalDateTime.now()
+                LocalDateTime.now(),
+                new ArrayList<>()
         );
     }
 }

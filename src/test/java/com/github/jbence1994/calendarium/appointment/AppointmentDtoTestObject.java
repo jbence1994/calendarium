@@ -11,9 +11,9 @@ public final class AppointmentDtoTestObject {
         return new AppointmentDto(
                 null,
                 " " + APPOINTMENT_NAME + " ",
-                null,
                 APPOINTMENT_START_DATE,
-                APPOINTMENT_END_DATE
+                APPOINTMENT_END_DATE,
+                null
         );
     }
 
@@ -21,9 +21,9 @@ public final class AppointmentDtoTestObject {
         return new AppointmentDto(
                 null,
                 " " + APPOINTMENT_NAME + " ",
-                " " + APPOINTMENT_DESCRIPTION + " ",
                 APPOINTMENT_START_DATE,
-                APPOINTMENT_END_DATE
+                APPOINTMENT_END_DATE,
+                " " + APPOINTMENT_DESCRIPTION + " "
         );
     }
 
@@ -31,9 +31,9 @@ public final class AppointmentDtoTestObject {
         return new AppointmentDto(
                 null,
                 APPOINTMENT_NAME,
-                APPOINTMENT_DESCRIPTION,
                 APPOINTMENT_START_DATE,
-                APPOINTMENT_END_DATE
+                APPOINTMENT_END_DATE,
+                APPOINTMENT_DESCRIPTION
         );
     }
 
@@ -41,9 +41,9 @@ public final class AppointmentDtoTestObject {
         return new AppointmentDto(
                 APPOINTMENT_ID,
                 APPOINTMENT_NAME,
-                APPOINTMENT_DESCRIPTION,
                 APPOINTMENT_START_DATE,
-                APPOINTMENT_END_DATE
+                APPOINTMENT_END_DATE,
+                APPOINTMENT_DESCRIPTION
         );
     }
 
@@ -51,9 +51,9 @@ public final class AppointmentDtoTestObject {
         return new AppointmentDto(
                 null,
                 APPOINTMENT_NAME,
-                APPOINTMENT_DESCRIPTION,
                 null,
-                APPOINTMENT_END_DATE
+                APPOINTMENT_END_DATE,
+                APPOINTMENT_DESCRIPTION
         );
     }
 
@@ -61,9 +61,9 @@ public final class AppointmentDtoTestObject {
         return new AppointmentDto(
                 APPOINTMENT_ID,
                 APPOINTMENT_NAME,
-                APPOINTMENT_DESCRIPTION,
                 APPOINTMENT_START_DATE,
-                null
+                null,
+                APPOINTMENT_DESCRIPTION
         );
     }
 }
