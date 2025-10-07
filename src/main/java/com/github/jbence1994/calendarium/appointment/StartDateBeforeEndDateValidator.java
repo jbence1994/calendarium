@@ -3,18 +3,18 @@ package com.github.jbence1994.calendarium.appointment;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
-public class StartDateBeforeEndDateValidator implements ConstraintValidator<StartDateBeforeEndDateValidation, AppointmentDto> {
+public class StartDateBeforeEndDateValidator implements ConstraintValidator<StartDateBeforeEndDateValidation, CreateAppointmentRequest> {
 
     @Override
     public void initialize(StartDateBeforeEndDateValidation startDateBeforeEndDateValidation) {
     }
 
     @Override
-    public boolean isValid(AppointmentDto appointmentDto, ConstraintValidatorContext constraintValidatorContext) {
-        if (appointmentDto == null || appointmentDto.getStartDate() == null || appointmentDto.getEndDate() == null) {
+    public boolean isValid(CreateAppointmentRequest request, ConstraintValidatorContext constraintValidatorContext) {
+        if (request == null || request.getStartDate() == null || request.getEndDate() == null) {
             return false;
         }
 
-        return appointmentDto.getStartDate().isBefore(appointmentDto.getEndDate());
+        return request.getStartDate().isBefore(request.getEndDate());
     }
 }

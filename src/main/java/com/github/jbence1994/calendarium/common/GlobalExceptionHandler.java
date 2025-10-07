@@ -1,6 +1,6 @@
 package com.github.jbence1994.calendarium.common;
 
-import com.github.jbence1994.calendarium.appointment.AppointmentDto;
+import com.github.jbence1994.calendarium.appointment.CreateAppointmentRequest;
 import com.github.jbence1994.calendarium.appointment.StartDateBeforeEndDateValidation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -22,7 +22,7 @@ public class GlobalExceptionHandler {
         );
 
         exception.getAllErrors().forEach(objectError -> {
-            var defaultMessage = AppointmentDto.class.getAnnotation(StartDateBeforeEndDateValidation.class).message();
+            var defaultMessage = CreateAppointmentRequest.class.getAnnotation(StartDateBeforeEndDateValidation.class).message();
 
             if (defaultMessage.equals(objectError.getDefaultMessage())) {
                 validationErrors.add(new ValidationErrorDto("appointment.startDate", objectError.getDefaultMessage()));

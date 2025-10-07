@@ -11,11 +11,11 @@ public class AppointmentServiceImpl implements AppointmentService {
     private final AuthService authService;
 
     @Override
-    public void createAppointment(Appointment appointment) {
+    public Appointment createAppointment(Appointment appointment) {
         var currentUser = authService.getCurrentUser();
 
         appointment.setOrganizer(currentUser);
 
-        appointmentRepository.save(appointment);
+        return appointmentRepository.save(appointment);
     }
 }

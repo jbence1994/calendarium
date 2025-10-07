@@ -13,9 +13,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.stream.Stream;
 
-import static com.github.jbence1994.calendarium.appointment.AppointmentDtoTestObject.appointmentDtoWithNullEndDate;
-import static com.github.jbence1994.calendarium.appointment.AppointmentDtoTestObject.appointmentDtoWithNullStartDate;
-import static com.github.jbence1994.calendarium.appointment.AppointmentDtoTestObject.appointmentDtoWithoutId;
+import static com.github.jbence1994.calendarium.appointment.CreateAppointmentRequestTestObject.createAppointmentRequestWithNullEndDate;
+import static com.github.jbence1994.calendarium.appointment.CreateAppointmentRequestTestObject.createAppointmentRequestWithNullStartDate;
+import static com.github.jbence1994.calendarium.appointment.CreateAppointmentRequestTestObject.createAppointmentRequestWithoutId;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.mock;
@@ -36,15 +36,15 @@ public class StartDateBeforeEndDateValidatorTests {
 
     private static Stream<Arguments> isNotValidParams() {
         return Stream.of(
-                Arguments.of("AppointmentDto is null", null),
-                Arguments.of("Start date is null", appointmentDtoWithNullStartDate()),
-                Arguments.of("End date is null", appointmentDtoWithNullEndDate())
+                Arguments.of("CreateAppointmentRequest is null", null),
+                Arguments.of("Start date is null", createAppointmentRequestWithNullStartDate()),
+                Arguments.of("End date is null", createAppointmentRequestWithNullEndDate())
         );
     }
 
     @Test
     public void isValidTest_HappyPath() {
-        var result = startDateBeforeEndDateValidator.isValid(appointmentDtoWithoutId(), context);
+        var result = startDateBeforeEndDateValidator.isValid(createAppointmentRequestWithoutId(), context);
 
         assertThat(result, is(true));
     }
@@ -53,9 +53,9 @@ public class StartDateBeforeEndDateValidatorTests {
     @MethodSource("isNotValidParams")
     public void isValidTest_UnhappyPaths(
             String testCase,
-            AppointmentDto appointmentDto
+            CreateAppointmentRequest request
     ) {
-        var result = startDateBeforeEndDateValidator.isValid(appointmentDto, context);
+        var result = startDateBeforeEndDateValidator.isValid(request, context);
 
         assertThat(result, is(false));
     }

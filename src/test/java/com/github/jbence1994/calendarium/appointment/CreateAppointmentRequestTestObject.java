@@ -2,14 +2,12 @@ package com.github.jbence1994.calendarium.appointment;
 
 import static com.github.jbence1994.calendarium.appointment.AppointmentTestConstants.APPOINTMENT_DESCRIPTION;
 import static com.github.jbence1994.calendarium.appointment.AppointmentTestConstants.APPOINTMENT_END_DATE;
-import static com.github.jbence1994.calendarium.appointment.AppointmentTestConstants.APPOINTMENT_ID;
 import static com.github.jbence1994.calendarium.appointment.AppointmentTestConstants.APPOINTMENT_NAME;
 import static com.github.jbence1994.calendarium.appointment.AppointmentTestConstants.APPOINTMENT_START_DATE;
 
-public final class AppointmentDtoTestObject {
-    public static AppointmentDto notSanitizedAppointmentDtoWithoutIdAndDescription() {
-        return new AppointmentDto(
-                null,
+public final class CreateAppointmentRequestTestObject {
+    public static CreateAppointmentRequest notSanitizedCreateAppointmentRequestWithoutIdAndDescription() {
+        return new CreateAppointmentRequest(
                 " " + APPOINTMENT_NAME + " ",
                 APPOINTMENT_START_DATE,
                 APPOINTMENT_END_DATE,
@@ -17,9 +15,8 @@ public final class AppointmentDtoTestObject {
         );
     }
 
-    public static AppointmentDto notSanitizedAppointmentDtoWithoutId() {
-        return new AppointmentDto(
-                null,
+    public static CreateAppointmentRequest notSanitizedCreateAppointmentRequestWithoutId() {
+        return new CreateAppointmentRequest(
                 " " + APPOINTMENT_NAME + " ",
                 APPOINTMENT_START_DATE,
                 APPOINTMENT_END_DATE,
@@ -27,9 +24,8 @@ public final class AppointmentDtoTestObject {
         );
     }
 
-    public static AppointmentDto appointmentDtoWithoutId() {
-        return new AppointmentDto(
-                null,
+    public static CreateAppointmentRequest createAppointmentRequestWithoutId() {
+        return new CreateAppointmentRequest(
                 APPOINTMENT_NAME,
                 APPOINTMENT_START_DATE,
                 APPOINTMENT_END_DATE,
@@ -37,9 +33,8 @@ public final class AppointmentDtoTestObject {
         );
     }
 
-    public static AppointmentDto appointmentDtoWithId() {
-        return new AppointmentDto(
-                APPOINTMENT_ID,
+    public static CreateAppointmentRequest createAppointmentRequestWithId() {
+        return new CreateAppointmentRequest(
                 APPOINTMENT_NAME,
                 APPOINTMENT_START_DATE,
                 APPOINTMENT_END_DATE,
@@ -47,9 +42,8 @@ public final class AppointmentDtoTestObject {
         );
     }
 
-    public static AppointmentDto appointmentDtoWithNullStartDate() {
-        return new AppointmentDto(
-                null,
+    public static CreateAppointmentRequest createAppointmentRequestWithNullStartDate() {
+        return new CreateAppointmentRequest(
                 APPOINTMENT_NAME,
                 null,
                 APPOINTMENT_END_DATE,
@@ -57,9 +51,8 @@ public final class AppointmentDtoTestObject {
         );
     }
 
-    public static AppointmentDto appointmentDtoWithNullEndDate() {
-        return new AppointmentDto(
-                APPOINTMENT_ID,
+    public static CreateAppointmentRequest createAppointmentRequestWithNullEndDate() {
+        return new CreateAppointmentRequest(
                 APPOINTMENT_NAME,
                 APPOINTMENT_START_DATE,
                 null,

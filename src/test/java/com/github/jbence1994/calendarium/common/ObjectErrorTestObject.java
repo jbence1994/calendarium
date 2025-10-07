@@ -4,7 +4,7 @@ import org.springframework.validation.ObjectError;
 
 public final class ObjectErrorTestObject {
     public static ObjectError objectError1() {
-        return new ObjectError("appointmentDto", "Start date must before end date.");
+        return new ObjectError("createAppointmentRequest", "Start date must before end date.");
     }
 
     public static ObjectError objectError2() {
