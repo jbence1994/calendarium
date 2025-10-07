@@ -19,11 +19,16 @@ CREATE TABLE IF NOT EXISTS users
 
 CREATE TABLE IF NOT EXISTS appointments
 (
-    id          BINARY(16)   NOT NULL PRIMARY KEY DEFAULT (UUID_TO_BIN(UUID())),
-    name        VARCHAR(255) NOT NULL,
-    start_date  DATETIME     NOT NULL,
-    end_date    DATETIME     NOT NULL,
-    description TEXT,
-    created_at  DATETIME     NOT NULL             DEFAULT CURRENT_TIMESTAMP,
-    updated_at  DATETIME     NOT NULL             DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    id           BINARY(16)   NOT NULL PRIMARY KEY DEFAULT (UUID_TO_BIN(UUID())),
+    name         VARCHAR(255) NOT NULL,
+    start_date   DATETIME     NOT NULL,
+    end_date     DATETIME     NOT NULL,
+    description  TEXT,
+    organizer_id BIGINT       NOT NULL,
+    created_at   DATETIME     NOT NULL             DEFAULT CURRENT_TIMESTAMP,
+    updated_at   DATETIME     NOT NULL             DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT fk_appointments_users
+        FOREIGN KEY (organizer_id) REFERENCES users (id)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE
 );

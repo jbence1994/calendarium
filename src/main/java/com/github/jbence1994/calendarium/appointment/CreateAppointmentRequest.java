@@ -7,24 +7,22 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @AllArgsConstructor
 @Getter
 @Setter
 @StartDateBeforeEndDateValidation
-public class AppointmentDto {
-    private UUID id;
+public class CreateAppointmentRequest {
 
     @NotNull(message = "Appointment's name must be provided.")
     @NotEmpty(message = "Appointment's name must be not empty.")
     private String name;
-
-    private String description;
 
     @NotNull(message = "Appointment's start date must be provided.")
     private LocalDateTime startDate;
 
     @NotNull(message = "Appointment's end date must be provided.")
     private LocalDateTime endDate;
+
+    private String description;
 }

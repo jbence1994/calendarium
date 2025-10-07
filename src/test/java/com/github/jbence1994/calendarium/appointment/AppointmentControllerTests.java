@@ -7,18 +7,16 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 
-import static com.github.jbence1994.calendarium.appointment.AppointmentDtoTestObject.appointmentDtoWithId;
-import static com.github.jbence1994.calendarium.appointment.AppointmentDtoTestObject.appointmentDtoWithoutId;
-import static com.github.jbence1994.calendarium.appointment.AppointmentDtoTestObject.notSanitizedAppointmentDtoWithoutId;
+import static com.github.jbence1994.calendarium.appointment.AppointmentTestObject.appointmentWithId;
 import static com.github.jbence1994.calendarium.appointment.AppointmentTestObject.appointmentWithoutId;
+import static com.github.jbence1994.calendarium.appointment.CreateAppointmentRequestTestObject.createAppointmentRequestWithoutId;
+import static com.github.jbence1994.calendarium.appointment.CreateAppointmentRequestTestObject.notSanitizedCreateAppointmentRequestWithoutId;
+import static com.github.jbence1994.calendarium.appointment.CreateAppointmentResponseTestObject.createAppointmentResponse;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -27,7 +25,7 @@ import static org.mockito.Mockito.when;
 public class AppointmentControllerTests {
 
     @Mock
-    private AppointmentDtoSanitizer appointmentDtoSanitizer;
+    private CreateAppointmentRequestSanitizer createAppointmentRequestSanitizer;
 
     @Mock
     private AppointmentService appointmentService;
@@ -39,22 +37,25 @@ public class AppointmentControllerTests {
     private AppointmentController appointmentController;
 
     @Test
-    public void createProductTest() {
-        when(appointmentDtoSanitizer.sanitize(any())).thenReturn(appointmentDtoWithoutId());
+    public void createAppointmentTest() {
+        when(createAppointmentRequestSanitizer.sanitize(any())).thenReturn(createAppointmentRequestWithoutId());
         when(appointmentMapper.toEntity(any())).thenReturn(appointmentWithoutId());
-        doNothing().when(appointmentService).createAppointment(any());
+        when(appointmentService.createAppointment(any())).thenReturn(appointmentWithId());
+        when(appointmentMapper.toResponse(any())).thenReturn(createAppointmentResponse());
 
-        var result = appointmentController.createAppointment(notSanitizedAppointmentDtoWithoutId());
+        var result = appointmentController.createAppointment(notSanitizedCreateAppointmentRequestWithoutId());
 
         assertThat(result.getStatusCode(), equalTo(HttpStatus.CREATED));
         assertThat(result.getBody(), not(nullValue()));
-        assertThat(result.getBody(), allOf(
-                hasProperty("name", equalTo(appointmentDtoWithId().getName())),
-                hasProperty("startDate", equalTo(appointmentDtoWithId().getStartDate())),
-                hasProperty("endDate", equalTo(appointmentDtoWithId().getEndDate()))
-        ));
+        assertThat(result.getBody().id(), equalTo(appointmentWithId().getId()));
+        assertThat(result.getBody().name(), equalTo(appointmentWithId().getName()));
+        assertThat(result.getBody().startDate(), equalTo(appointmentWithId().getStartDate()));
+        assertThat(result.getBody().endDate(), equalTo(appointmentWithId().getEndDate()));
+        assertThat(result.getBody().organizer(), not(nullValue()));
 
+        verify(createAppointmentRequestSanitizer, times(1)).sanitize(any());
         verify(appointmentMapper, times(1)).toEntity(any());
         verify(appointmentService, times(1)).createAppointment(any());
+        verify(appointmentMapper, times(1)).toResponse(any());
     }
 }
