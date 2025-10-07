@@ -1,5 +1,6 @@
 package com.github.jbence1994.calendarium.common;
 
+import com.github.jbence1994.calendarium.user.UserNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -75,5 +76,14 @@ public class GlobalExceptionHandlerTests {
         assertThat(result.getBody().size(), equalTo(1));
         assertThat(result.getBody().stream().toList().getFirst().field(), equalTo("objectError"));
         assertThat(result.getBody().stream().toList().getFirst().message(), equalTo("ObjectError message."));
+    }
+
+    @Test
+    public void handleUserNotFoundExceptionTest() {
+        var result = globalExceptionHandler.handleUserNotFoundException(new UserNotFoundException(1L));
+
+        assertThat(result.getStatusCode(), equalTo(HttpStatus.NOT_FOUND));
+        assertThat(result.getBody(), not(nullValue()));
+        assertThat(result.getBody().error(), equalTo("No user was found with the given ID: #1."));
     }
 }
