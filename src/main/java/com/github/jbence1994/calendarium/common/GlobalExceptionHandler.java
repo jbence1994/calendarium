@@ -2,6 +2,8 @@ package com.github.jbence1994.calendarium.common;
 
 import com.github.jbence1994.calendarium.appointment.CreateAppointmentRequest;
 import com.github.jbence1994.calendarium.appointment.StartDateBeforeEndDateValidation;
+import com.github.jbence1994.calendarium.user.UserNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -32,5 +34,10 @@ public class GlobalExceptionHandler {
         });
 
         return ResponseEntity.badRequest().body(validationErrors);
+    }
+
+    @ExceptionHandler(exception = {UserNotFoundException.class})
+    public ResponseEntity<ErrorDto> handleUserNotFoundException(UserNotFoundException exception) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorDto(exception.getMessage()));
     }
 }
