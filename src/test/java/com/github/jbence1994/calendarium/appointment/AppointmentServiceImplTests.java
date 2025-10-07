@@ -29,12 +29,13 @@ public class AppointmentServiceImplTests {
     private AppointmentServiceImpl appointmentService;
 
     @Test
-    public void createProductTest() {
+    public void createAppointmentTest() {
         when(authService.getCurrentUser()).thenReturn(user());
         when(appointmentRepository.save(any())).thenReturn(appointmentWithId());
 
         assertDoesNotThrow(() -> appointmentService.createAppointment(appointmentWithoutId()));
 
+        verify(authService, times(1)).getCurrentUser();
         verify(appointmentRepository, times(1)).save(any());
     }
 }
