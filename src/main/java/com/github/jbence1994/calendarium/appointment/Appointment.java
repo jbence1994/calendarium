@@ -7,6 +7,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -16,6 +18,8 @@ import lombok.Setter;
 import org.hibernate.annotations.GeneratedColumn;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -49,4 +53,12 @@ public class Appointment {
     @Column(insertable = false, updatable = false)
     @GeneratedColumn("updated_at")
     private LocalDateTime updatedAt;
+
+    @ManyToMany
+    @JoinTable(
+            name = "appointment_participants",
+            joinColumns = @JoinColumn(name = "appointment_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "participant_id", referencedColumnName = "id")
+    )
+    private List<User> participants = new ArrayList<>();
 }

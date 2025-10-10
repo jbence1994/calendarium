@@ -1,13 +1,13 @@
 package com.github.jbence1994.calendarium.user;
 
 import com.github.jbence1994.calendarium.appointment.Appointment;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -51,6 +51,6 @@ public class User {
     @GeneratedColumn("updated_at")
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "organizer", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToMany(mappedBy = "participants", fetch = FetchType.EAGER)
     private List<Appointment> appointments = new ArrayList<>();
 }
