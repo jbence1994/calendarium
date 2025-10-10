@@ -22,5 +22,6 @@ public interface AppointmentMapper {
     @Mapping(target = "organizer", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "participants", ignore = true)
     Appointment toEntity(CreateAppointmentRequest request);
 }
