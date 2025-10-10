@@ -2,6 +2,8 @@ package com.github.jbence1994.calendarium.appointment;
 
 import com.github.jbence1994.calendarium.user.User;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.UUID;
 
 import static com.github.jbence1994.calendarium.appointment.AppointmentTestConstants.APPOINTMENT_DESCRIPTION;
@@ -28,8 +30,9 @@ public final class AppointmentTestObject {
                 APPOINTMENT_END_DATE,
                 APPOINTMENT_DESCRIPTION,
                 user,
-                null,
-                null
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                new ArrayList<>()
         );
     }
 }
