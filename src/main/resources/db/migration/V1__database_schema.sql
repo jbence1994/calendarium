@@ -32,3 +32,18 @@ CREATE TABLE IF NOT EXISTS appointments
             ON DELETE CASCADE
             ON UPDATE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS appointment_participants
+(
+    appointment_id BINARY(16) NOT NULL,
+    participant_id BIGINT     NOT NULL,
+    PRIMARY KEY (appointment_id, participant_id),
+    CONSTRAINT fk_appointment_participants_appointments
+        FOREIGN KEY (appointment_id) REFERENCES appointments (id)
+            ON DELETE NO ACTION
+            ON UPDATE CASCADE,
+    CONSTRAINT fk_appointment_participants_users
+        FOREIGN KEY (participant_id) REFERENCES users (id)
+            ON DELETE NO ACTION
+            ON UPDATE CASCADE
+);
